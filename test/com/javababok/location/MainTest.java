@@ -1,12 +1,18 @@
 package com.javababok.location;
 
+import org.junit.After;
+import org.junit.Before;
+
+import static org.junit.Assert.*;
+
+
 public class MainTest {
-    @org.junit.Before
+    @Before
     public void setUp() throws Exception {
 
     }
 
-    @org.junit.After
+    @After
     public void tearDown() throws Exception {
 
     }
