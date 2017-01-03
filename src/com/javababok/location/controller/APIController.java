@@ -20,7 +20,7 @@ public class APIController {
 
     public String location (Request request, Response response) throws IOException, URISyntaxException {
 
-        return apiService.calcTime(origin, "Budapest");
+        return apiService.calcTime(origin, request.params(":destination"));
     }
 
 
