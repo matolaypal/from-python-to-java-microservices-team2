@@ -16,7 +16,7 @@ public class TimeGeneratorService {
         application.controller = new APIController(APIService.getInstance());
 
         // --- MAPPING ---
-        get("/api/location", application.controller::location);
+        get("/api/location/:destination", application.controller::location);
     }
 
 }
