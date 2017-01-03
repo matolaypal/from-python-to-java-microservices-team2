@@ -11,7 +11,7 @@ import java.net.URISyntaxException;
 public class APIController {
 
     private final APIService apiService;
-    private static final String origin  = "Budapest";
+    private static final String origin  = "Amsterdam";
 
     public APIController(APIService apiService){
 
