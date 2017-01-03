@@ -1,41 +1,56 @@
 package com.javababok.location.controller;
 
 import org.apache.http.client.fluent.Request;
-import org.apache.http.client.fluent.Response;
 import org.apache.http.client.utils.URIBuilder;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.concurrent.TimeUnit;
 
 
 public class MainController {
 
     private static final String API_URL = "http://localhost:60003";
 
-    public static String getJson() throws IOException, URISyntaxException {
-        return execute("/api/location");
+    private static JSONObject getRouteDetails() throws IOException, URISyntaxException, JSONException {
+        JSONObject jsonObject = new JSONObject(execute("/api/location"));
+        JSONObject routeDetailsList = (JSONObject) ((JSONArray) jsonObject.get("rows")).get(0);
+        return (JSONObject) ((JSONArray) routeDetailsList.get("elements")).get(0);
+    }
+
+    private static String checkStatus() throws IOException, URISyntaxException, JSONException {
+        JSONObject routeDetails = getRouteDetails();
+        String status = routeDetails.get("status").toString();
+        switch (status) {
+            case "ZERO_RESULTS":
+                return "ERROR: Oversea location!";
+
+            case "NOT_FOUND":
+                return "ERROR: Place doesn't exist!";
+            default:
+                return status;
+        }
+    }
+
+    public static JSONObject getTimeInMs() throws IOException, URISyntaxException, JSONException {
+        JSONObject json = new JSONObject();
+        String status = checkStatus();
+        if(!status.equals("OK")) {
+            json.put("time", status);
+            return json;
+        }
+        JSONObject routeDetails = getRouteDetails();
+        Integer timeInSec = (Integer) ((JSONObject) routeDetails.get("duration")).get("value");
+        json.put("time", TimeUnit.SECONDS.toMillis(timeInSec));
+        return json;
     }
 
     private static String execute(String url) throws IOException, URISyntaxException {
         URI uri = new URIBuilder(API_URL + url).build();
         return Request.Get(uri).execute().returnContent().asString();
     }
-
-
-    /*public String getResultAsString(JSONObject json) throws JSONException {
-        String jsonstring = null;
-        JSONArray data = json.getJSONArray("data");
-        if(data != null){
-            String time[] = new String [data.length()];
-            for (int i = 0; i<data.length(); i++){
-                if(json[i].equals("duraion")){
-                    jsonstring = data.getString(i);
-            }
-        }
-        return jsonstring;
-    }
-
-        REPONSE_JSON_OBJECT.getJSONObject("rows").getJSONObject("elements").getJSONArray("duration");*/
 }
