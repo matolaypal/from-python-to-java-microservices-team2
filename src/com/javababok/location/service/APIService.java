@@ -1,8 +1,10 @@
 package com.javababok.location.service;
 
+import org.apache.http.client.fluent.Request;
 import org.apache.http.client.utils.URIBuilder;
 import org.json.JSONObject;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 
 public class APIService {
@@ -21,7 +23,7 @@ public class APIService {
         return INSTANCE;
     }
 
-    public JSONObject calcTime(String origin, String destination) throws URISyntaxException, IOException {
+    public String calcTime(String origin, String destination) throws URISyntaxException, IOException {
         URIBuilder builder = new URIBuilder(API_URL);
 
         builder.addParameter("units", "metric");
@@ -29,7 +31,11 @@ public class APIService {
         builder.addParameter("destinations", destination);
         builder.addParameter("key", API_KEY);
 
-        JSONObject jsonObject = new JSONObject(builder.build());
-        return jsonObject;
+
+        return execute(builder.build());
+    }
+
+    private String execute(URI uri) throws IOException {
+        return Request.Get(uri).execute().returnContent().asString();
     }
 }

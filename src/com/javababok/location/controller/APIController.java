@@ -18,9 +18,9 @@ public class APIController {
         this.apiService = apiService;
     }
 
-    public JSONObject location (Request request, Response response) throws IOException, URISyntaxException {
+    public String location (Request request, Response response) throws IOException, URISyntaxException {
 
-        return apiService.calcTime(origin, request.queryParams("destination"));
+        return apiService.calcTime(origin, "Budapest");
     }
 
 
