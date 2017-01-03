@@ -1,4 +1,15 @@
 package com.javababok.location;
 
+import com.javababok.location.controller.MainController;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+
 public class Main {
+
+    public static void main(String[] args) throws IOException, URISyntaxException {
+        MainController newmain = new MainController();
+        System.out.println(newmain.getJson());
+
+    }
 }
