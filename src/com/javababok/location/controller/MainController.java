@@ -27,10 +27,10 @@ public class MainController {
         String status = routeDetails.get("status").toString();
         switch (status) {
             case "ZERO_RESULTS":
-                return "ERROR: Oversea location!";
+                return "ZERO_RESULTS ERROR: Oversea location!";
 
             case "NOT_FOUND":
-                return "ERROR: Place doesn't exist!";
+                return " NOT_FOUND ERROR: Place doesn't exist!";
             default:
                 return status;
         }
@@ -40,12 +40,14 @@ public class MainController {
         JSONObject json = new JSONObject();
         String status = checkStatus();
         if(!status.equals("OK")) {
-            json.put("time", status);
+            json.put("time", 0);
+            json.put("status", status);
             return json;
         }
         JSONObject routeDetails = getRouteDetails();
         Integer timeInSec = (Integer) ((JSONObject) routeDetails.get("duration")).get("value");
         json.put("time", TimeUnit.SECONDS.toMillis(timeInSec));
+        json.put("status", status);
         return json;
     }
 
