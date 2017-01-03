@@ -10,6 +10,8 @@ public class APIService {
     private static final String API_URL = "https://maps.googleapis.com/maps/api/distancematrix/json?";
     private static final String API_KEY = "AIzaSyBCZljDDXlcKS3WICsg0hfndUNF2oLevRY";
 
+    public APIService() {}
+
     private static APIService INSTANCE;
 
     public static APIService getInstance() {
