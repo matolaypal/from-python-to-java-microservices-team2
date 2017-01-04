@@ -1,8 +1,9 @@
 package com.javababok.timecalculator.service;
-
+/*
+Here get the json from Google and get back for API.
+ */
 import org.apache.http.client.fluent.Request;
 import org.apache.http.client.utils.URIBuilder;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
