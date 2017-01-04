@@ -54,7 +54,7 @@ public class APIController {
                 return "ZERO_RESULTS ERROR: Oversea location!";
 
             case "NOT_FOUND":
-                return " NOT_FOUND ERROR: Place doesn't exist!";
+                return "NOT_FOUND ERROR: Place doesn't exist!";
             default:
                 return status;
         }
