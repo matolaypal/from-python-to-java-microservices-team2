@@ -21,7 +21,6 @@ public class APIControllerTest {
     public void getTimeInMsWithCorrectLocation() throws NullPointerException, JSONException, IOException, URISyntaxException {
         APIController apiController = new APIController(APIService.getInstance());
         assertEquals("{\"time\":48279000,\"status\":\"OK\"}", apiController.getTimeInMs("Budapest").toString());
-
     }
 
     @Test
@@ -34,7 +33,7 @@ public class APIControllerTest {
     @Test
     public void overseaLocation() throws NullPointerException, JSONException, IOException, URISyntaxException {
         APIController apiController = new APIController(APIService.getInstance());
-        assertEquals("{\"time\":0,\"status\":\"ZERO_RESULTS ERROR: Oversea timecalculator!\"}", apiController.getTimeInMs("New York").toString());
+        assertEquals("{\"time\":0,\"status\":\"ZERO_RESULTS ERROR: Oversea location!\"}", apiController.getTimeInMs("New York").toString());
 
     }
 
@@ -43,6 +42,12 @@ public class APIControllerTest {
         APIController apiController = new APIController(APIService.getInstance());
         assertEquals("{\"duration\":{\"text\":\"13 hours 25 mins\",\"value\":48279},\"distance\":{\"text\":\"1,395 km\",\"value\":1395271},\"status\":\"OK\"}", apiController.getRouteDetails("Budapest").toString());
 
+    }
+
+    @Test
+    public void checkStatus() throws NullPointerException, JSONException, IOException, URISyntaxException {
+        APIController apiController = new APIController(APIService.getInstance());
+        assertEquals("OK", apiController.checkStatus("Budapest").toString());
     }
 
 
