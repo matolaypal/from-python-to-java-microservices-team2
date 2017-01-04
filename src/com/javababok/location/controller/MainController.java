@@ -16,14 +16,14 @@ public class MainController {
 
     private static final String API_URL = "http://localhost:60003";
 
-    private static JSONObject getRouteDetails() throws IOException, URISyntaxException, JSONException {
-        JSONObject jsonObject = new JSONObject(execute("/api/location"));
+    private static JSONObject getRouteDetails(String destination) throws IOException, URISyntaxException, JSONException {
+        JSONObject jsonObject = new JSONObject(execute("/api/location/" + destination));
         JSONObject routeDetailsList = (JSONObject) ((JSONArray) jsonObject.get("rows")).get(0);
         return (JSONObject) ((JSONArray) routeDetailsList.get("elements")).get(0);
     }
 
-    private static String checkStatus() throws IOException, URISyntaxException, JSONException {
-        JSONObject routeDetails = getRouteDetails();
+    private static String checkStatus(String destination) throws IOException, URISyntaxException, JSONException {
+        JSONObject routeDetails = getRouteDetails(destination);
         String status = routeDetails.get("status").toString();
         switch (status) {
             case "ZERO_RESULTS":
@@ -36,15 +36,15 @@ public class MainController {
         }
     }
 
-    public static JSONObject getTimeInMs() throws IOException, URISyntaxException, JSONException {
+    public static JSONObject getTimeInMs(String destination) throws IOException, URISyntaxException, JSONException {
         JSONObject json = new JSONObject();
-        String status = checkStatus();
+        String status = checkStatus(destination);
         if(!status.equals("OK")) {
             json.put("time", 0);
             json.put("status", status);
             return json;
         }
-        JSONObject routeDetails = getRouteDetails();
+        JSONObject routeDetails = getRouteDetails(destination);
         Integer timeInSec = (Integer) ((JSONObject) routeDetails.get("duration")).get("value");
         json.put("time", TimeUnit.SECONDS.toMillis(timeInSec));
         json.put("status", status);
