@@ -1,5 +1,7 @@
 package com.javababok.timecalculator;
-
+/*
+Mapping all route for the API and link with the APIController.
+ */
 import com.javababok.timecalculator.controller.APIController;
 import com.javababok.timecalculator.service.APIService;
 
@@ -16,6 +18,7 @@ public class TimeGeneratorService {
         application.controller = new APIController(APIService.getInstance());
 
         // --- MAPPING ---
+        //for e.g.: http://0.0.0.0:60003/api/timecalculator/Budapest
         get("/api/timecalculator/:destination", application.controller::location);
     }
 
