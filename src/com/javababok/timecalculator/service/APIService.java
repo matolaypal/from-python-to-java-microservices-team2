@@ -1,8 +1,8 @@
-package com.javababok.location.service;
+package com.javababok.timecalculator.service;
 
 import org.apache.http.client.fluent.Request;
 import org.apache.http.client.utils.URIBuilder;
-import org.json.JSONObject;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -30,7 +30,6 @@ public class APIService {
         builder.addParameter("origins", origin);
         builder.addParameter("destinations", destination);
         builder.addParameter("key", API_KEY);
-
 
         return execute(builder.build());
     }

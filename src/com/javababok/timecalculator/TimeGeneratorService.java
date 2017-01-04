@@ -1,7 +1,7 @@
-package com.javababok.location;
+package com.javababok.timecalculator;
 
-import com.javababok.location.controller.APIController;
-import com.javababok.location.service.APIService;
+import com.javababok.timecalculator.controller.APIController;
+import com.javababok.timecalculator.service.APIService;
 
 import static spark.Spark.port;
 import static spark.Spark.get;
@@ -16,7 +16,7 @@ public class TimeGeneratorService {
         application.controller = new APIController(APIService.getInstance());
 
         // --- MAPPING ---
-        get("/api/location/:destination", application.controller::location);
+        get("/api/timecalculator/:destination", application.controller::location);
     }
 
 }
