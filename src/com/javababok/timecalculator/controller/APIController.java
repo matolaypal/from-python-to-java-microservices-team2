@@ -45,7 +45,7 @@ public class APIController {
         return json;
     }
 
-    private String checkStatus(String destination) throws IOException, URISyntaxException, JSONException {
+    public String checkStatus(String destination) throws IOException, URISyntaxException, JSONException {
         // Check the status and expand it, if no OK (or something else).
         JSONObject routeDetails = getRouteDetails(destination);
         String status = routeDetails.get("status").toString();
@@ -60,7 +60,7 @@ public class APIController {
         }
     }
 
-    private JSONObject getRouteDetails(String destination) throws IOException, URISyntaxException, JSONException {
+    public JSONObject getRouteDetails(String destination) throws IOException, URISyntaxException, JSONException {
         // Here get the json from Google and return it.
         JSONObject jsonObject = new JSONObject(apiService.calcTime(ORIGIN, destination));
         JSONObject routeDetailsList = (JSONObject) ((JSONArray) jsonObject.get("rows")).get(0);
