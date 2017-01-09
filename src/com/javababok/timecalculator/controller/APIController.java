@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class APIController {
 
     private static APIService apiService;
-    // ORIGIN string store the webshop location.
+    // ORIGIN string store the webshop location
     // TODO: Change origin location, what you want!
     private static final String ORIGIN = "Amsterdam";
 
