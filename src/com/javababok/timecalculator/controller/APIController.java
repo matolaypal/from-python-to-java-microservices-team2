@@ -11,22 +11,41 @@ import java.net.URISyntaxException;
 import java.util.concurrent.TimeUnit;
 
 
+/**
+ * ORIGIN mean the place, where the shop is.
+ * (You can modify here, if you want!)
+ */
 public class APIController {
 
     private static APIService apiService;
-    // ORIGIN string store the webshop location
-    // TODO: Change origin location, what you want!
     private static final String ORIGIN = "Amsterdam";
 
+    /**
+     * @param apiService not null
+     */
     public APIController(APIService apiService){
         APIController.apiService = apiService;
     }
 
+    /**
+     * @param request to the server
+     * @param response from the server
+     * @return the requested target location from the client
+     * @throws IOException when failed or interrupted I/O operations
+     * @throws URISyntaxException when the string could not be parsed as an URI reference.
+     * @throws JSONException indicates that some exception happened during JSON processing
+     */
     public JSONObject location (Request request, Response response) throws IOException, URISyntaxException, JSONException {
         return this.getTimeInMs(request.params(":destination"));
     }
 
-    // This method create the final json with the output data.
+    /**
+     * @param destination the place where the customer is
+     * @return the final result as JSON
+     * @throws IOException when failed or interrupted I/O operations
+     * @throws URISyntaxException when the string could not be parsed as an URI reference.
+     * @throws JSONException indicates that some exception happened during JSON processing
+     */
     public JSONObject getTimeInMs(String destination) throws IOException, URISyntaxException, JSONException {
         JSONObject json = new JSONObject();
         String status = checkStatus(destination);
@@ -45,6 +64,13 @@ public class APIController {
         return json;
     }
 
+    /**
+     * @param destination the place where the customer is
+     * @return the status of searching result
+     * @throws IOException when failed or interrupted I/O operations
+     * @throws URISyntaxException when the string could not be parsed as an URI reference.
+     * @throws JSONException indicates that some exception happened during JSON processing
+     */
     public String checkStatus(String destination) throws IOException, URISyntaxException, JSONException {
         // Check the status and expand it, if no OK (or something else).
         JSONObject routeDetails = getRouteDetails(destination);
@@ -60,8 +86,14 @@ public class APIController {
         }
     }
 
+    /**
+     * @param destination the place where the customer is
+     * @return the base JSON, what contain data for checkStatus() and getTimeInMs()
+     * @throws IOException when failed or interrupted I/O operations
+     * @throws URISyntaxException when the string could not be parsed as an URI reference.
+     * @throws JSONException indicates that some exception happened during JSON processing
+     */
     public JSONObject getRouteDetails(String destination) throws IOException, URISyntaxException, JSONException {
-        // Here get the json from Google and return it.
         JSONObject jsonObject = new JSONObject(apiService.calcTime(ORIGIN, destination));
         JSONObject routeDetailsList = (JSONObject) ((JSONArray) jsonObject.get("rows")).get(0);
         return (JSONObject) ((JSONArray) routeDetailsList.get("elements")).get(0);

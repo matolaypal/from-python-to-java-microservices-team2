@@ -17,6 +17,9 @@ public class APIService {
 
     private static APIService INSTANCE;
 
+    /**
+     * @return instance of the APIService
+     */
     public static APIService getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new APIService();
@@ -24,6 +27,13 @@ public class APIService {
         return INSTANCE;
     }
 
+    /**
+     * @param origin the place name, where the shop is
+     * @param destination the place name, where the customer is
+     * @return the executed URI, as String
+     * @throws URISyntaxException, when the string could not be parsed as an URI reference
+     * @throws IOException, when failed or interrupted I/O operations
+     */
     public String calcTime(String origin, String destination) throws URISyntaxException, IOException {
         URIBuilder builder = new URIBuilder(API_URL);
 
@@ -35,6 +45,11 @@ public class APIService {
         return execute(builder.build());
     }
 
+    /**
+     * @param uri not null
+     * @return the executed URI content, as String
+     * @throws IOException when failed or interrupted I/O operations
+     */
     private String execute(URI uri) throws IOException {
         return Request.Get(uri).execute().returnContent().asString();
     }
