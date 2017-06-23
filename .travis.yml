@@ -4,8 +4,7 @@ env:
 before_install:
   - curl -sL https://github.com/jpm4j/jpm4j.installers/raw/master/dist/biz.aQute.jpm.run.jar >jpm4j.jar
   - java -jar jpm4j.jar -u init
-  - install com.codacy:codacy-coverage-reporter:assembly
+  - ~/jpm/bin install com.codacy:codacy-coverage-reporter:assembly
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
   - ~/jpm/bin/codacy-coverage-reporter -l Java -r target/site/jacoco/jacoco.xml
